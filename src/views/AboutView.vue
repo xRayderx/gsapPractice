@@ -60,13 +60,13 @@ const afterLeave = (el) => {
   console.log("Despues de salir", el)
 }*/
 
-const beforeEnter = (el) => {
+const beforeEnter = (el: any) => {
   console.log("Antes de entrar - estado inicial")
   el.style.transform = 'translateY(-60px)'
   el.style.opacity = 0
 }
 
-const enter = (el, done) => {
+const enter = (el: any, done: any) => {
   console.log("Entramos - haz la transición")
   gsap.to(el, {
     duration: 3,
@@ -81,14 +81,14 @@ const afterEnter = () => {
   console.log("Despues de entrar")
 }
 
-const beforeEnterIcon = (el) => {
+const beforeEnterIcon = (el: any) => {
   console.log("Antes de entrar iconos")
 
   el.style.opacity = 0;
   el.style.transform = 'translateY(100px)'
 }
 
-const enterIcon = (el, done) => {
+const enterIcon = (el: any, done: any) => {
   console.log("Entran iconos")
   gsap.to(el, {
     opacity: 1,
