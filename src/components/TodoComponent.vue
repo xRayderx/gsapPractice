@@ -54,10 +54,17 @@ const deleteTodo = (id) => {
   input {
     width: 100%;
     padding: 12px;
-    border: 1px solid #eee;
+    border: 1px solid #66FCF1;
     border-radius: 10px;
     box-sizing: border-box;
     margin-bottom: 20px;
+    background-color: #0B0C10;
+    color: white;
+  }
+
+  input:focus {
+    background-color: white;
+    color: black;
   }
 
   .todos ul {
@@ -70,11 +77,13 @@ const deleteTodo = (id) => {
     display: block;
     margin-bottom: 10px;
     padding: 10px;
-    background: white;
+    background: #0B0C10;
     box-shadow: 1px 3px 5px rgba(0,0,0,0.1);
     border-radius: 10px;
+    border: 1px solid #66FCF1;
     width: 100%;
     box-sizing: border-box;
+    color: white;
   }
   
   .todos li:hover {
