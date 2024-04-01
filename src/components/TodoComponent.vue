@@ -39,7 +39,7 @@ const addTodo = () => {
     }
 }
 
-const deleteTodo = (id) => {
+const deleteTodo = (id: number) => {
     todos.value = todos.value.filter(todo => todo.id != id)
 }
 </script>

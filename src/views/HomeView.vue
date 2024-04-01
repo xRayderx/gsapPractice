@@ -26,12 +26,12 @@ const triggerToast = () => {
   setTimeout(() => showToast.value = false, 3000)
 }
 
-const beforeEnter = (el) => {
+const beforeEnter = (el: any) => {
   el.style.transform = 'translateY(-60px)'
   el.style.opacity = 0
 }
 
-const enter = (el, done) => {
+const enter = (el: any, done: any) => {
   gsap.to(el, {
     duration: 3,
     y: 0,
