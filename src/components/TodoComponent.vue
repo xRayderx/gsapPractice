@@ -25,22 +25,27 @@ import { ref } from 'vue'
 
 const emit = defineEmits(['badValue'])
 
-const todos = ref([])
+interface Todo {
+  id: number;
+  text: string;
+}
+
+const todos = ref<Todo[]>([])
 
 const newTodo = ref('')
 
 const addTodo = () => {
-    if (newTodo.value) {
-        const id = Math.random()
-        todos.value = [{ text: newTodo.value, id }, ...todos.value]
-        newTodo.value = ''
-    } else {
-        emit('badValue')
-    }
+  if(newTodo.value) {
+    const id = Math.random()
+    todos.value = [{ text: newTodo.value, id }, ...todos.value]
+    newTodo.value = ''
+  } else {
+    emit('badValue')
+  }
 }
 
 const deleteTodo = (id: number) => {
-    todos.value = todos.value.filter(todo => todo.id != id)
+  todos.value = todos.value.filter(todo => todo.id != id)
 }
 </script>
   
