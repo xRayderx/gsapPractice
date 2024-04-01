@@ -3,6 +3,10 @@
     <transition name="toast">
       <Toast v-if="showToast" />
     </transition>
+
+    <transition appear @before-enter="beforeEnter" @enter="enter">
+      <h1>Todo App</h1>
+    </transition>
     
     <Todos @badValue="triggerToast" />
   </div>
@@ -10,6 +14,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import gsap from 'gsap'
 import Toast from '../components/ToastComponent.vue'
 import Todos from '../components/TodoComponent.vue'
 
@@ -20,22 +25,25 @@ const triggerToast = () => {
   showToast.value = true;
   setTimeout(() => showToast.value = false, 3000)
 }
+
+const beforeEnter = (el) => {
+  el.style.transform = 'translateY(-60px)'
+  el.style.opacity = 0
+}
+
+const enter = (el, done) => {
+  gsap.to(el, {
+    duration: 3,
+    y: 0,
+    opacity: 1,
+    ease: 'bounce.out',
+    onComplete: done
+  })
+}
 </script>
 
 <style>
-  /*.toast-enter-from {
-    opacity: 0;
-    transform: translateY(-60px);
-  }
-  
-  .toast-enter-to {
-    opacity: 1;
-    transform: translateY(0)
-  }
-  */
-  
   .toast-enter-active {
-    /*transition: all .3s ease-in;*/
     animation: wobble .5s ease;
   }
 

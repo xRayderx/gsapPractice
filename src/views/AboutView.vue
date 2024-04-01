@@ -4,27 +4,30 @@
       <h1 v-if="showTitle">Contactame</h1>
     </transition>-->
 
-    <transition appear name="fade" @before-enter="beforeEnter" @enter="enter">
+    <transition appear @before-enter="beforeEnter" @enter="enter" @after-enter="afterEnter">
       <h1>Contactame</h1>
     </transition>
     
-    <ul>
-      <li v-for="icon in icons" :key="icon.name">
-        <span class="material-icons">{{ icon.name }}</span>
-        <div>{{ icon.text }}</div>
+    <transition-group tag="ul" appear @before-enter="beforeEnterIcon" @enter="enterIcon">
+      <li v-for="(icon, index) in icons" :key="icon.name" :data-index="index">
+        <a :href="icon.link" rel="noreferrer noopener">
+          <span class="material-icons">{{ icon.name }}</span>
+          <div>{{ icon.text }}</div>
+        </a>
       </li>
-    </ul>
+    </transition-group>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import gsap from 'gsap'
 
 const icons = ref([
-  { name: 'alternate_email', text: 'by email'},
-  { name: 'local_phone', text: 'by phone'},
-  { name: 'local_post_office', text: 'by post'},
-  { name: 'local_fire_department', text: 'by smoke signal'},
+  { name: 'computer', text: 'Github', link: 'https://github.com/xRayderx'},
+  { name: 'send', text: 'Telegram', link: 'https://t.me/xRayder18'},
+  { name: 'work', text: 'Linkedin', link: 'https://www.linkedin.com/in/josemarti1896/'},
+  { name: 'mail', text: 'Correo', link: 'mailto:josemarti1896@gmail.com'}
 ])
 
 /*const showTitle = ref(true)
@@ -58,11 +61,42 @@ const afterLeave = (el) => {
 }*/
 
 const beforeEnter = (el) => {
-
+  console.log("Antes de entrar - estado inicial")
+  el.style.transform = 'translateY(-60px)'
+  el.style.opacity = 0
 }
 
-const enter = (el) => {
+const enter = (el, done) => {
+  console.log("Entramos - haz la transición")
+  gsap.to(el, {
+    duration: 3,
+    y: 0,
+    opacity: 1,
+    ease: 'bounce.out',
+    onComplete: done
+  })
+}
 
+const afterEnter = () => {
+  console.log("Despues de entrar")
+}
+
+const beforeEnterIcon = (el) => {
+  console.log("Antes de entrar iconos")
+
+  el.style.opacity = 0;
+  el.style.transform = 'translateY(100px)'
+}
+
+const enterIcon = (el, done) => {
+  console.log("Entran iconos")
+  gsap.to(el, {
+    opacity: 1,
+    y: 0,
+    duration: 0.8,
+    onComplete: done,
+    delay: el.dataset.index * 0.2
+  })
 }
 </script>
 
@@ -75,17 +109,36 @@ const enter = (el) => {
     max-width: 400px;
     margin: 60px auto;
   }
+
   .contact li {
     list-style-type: none;
-    background: white;
+    background: #0B0C10;
     padding: 30px;
     border-radius: 10px;
     box-shadow: 1px 3px 5px rgba(0,0,0,0.1);
     cursor: pointer;
     line-height: 1.5em;
+    color: white;
+    border: 1px solid #66FCF1;
   }
 
-  .fade-enter-from {
+  a {
+    text-decoration: none;
+  }
+
+  a:visited {
+    color: white;
+  }
+
+  a[href^="mailto"] {
+    color: white;
+  }
+
+  a[href^="mailto"]:visited {
+    color: white;
+  }
+
+  .fade-enter-from { 
     opacity: 0;
   }
 
