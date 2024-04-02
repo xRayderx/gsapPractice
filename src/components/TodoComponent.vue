@@ -31,7 +31,7 @@ interface Todo {
 }
 
 const initialTodos = JSON.parse(localStorage.getItem('todos') || '[]')
-const todoId = localStorage.getItem('lastTodoId') ? parseInt(localStorage.getItem('lastTodoId'), 10) : 0
+const todoId = parseInt(localStorage.getItem('lastTodoId') || "0", 10)
 
 const todos = ref<Todo[]>(initialTodos)
 
