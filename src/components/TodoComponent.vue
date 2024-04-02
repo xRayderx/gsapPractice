@@ -21,7 +21,7 @@
 </template>
   
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 
 const emit = defineEmits(['badValue'])
 
@@ -30,15 +30,25 @@ interface Todo {
   text: string;
 }
 
-const todos = ref<Todo[]>([])
+const initialTodos = JSON.parse(localStorage.getItem('todos') || '[]')
+const todoId = localStorage.getItem('lastTodoId') ? parseInt(localStorage.getItem('lastTodoId'), 10) : 0
+
+const todos = ref<Todo[]>(initialTodos)
 
 const newTodo = ref('')
+let newId = ref(todoId + 1) 
+
+watch(todos, () => {
+  localStorage.setItem('todos', JSON.stringify(todos.value))
+  localStorage.setItem('lastTodoId', newId.value.toString())
+})
 
 const addTodo = () => {
-  if(newTodo.value) {
-    const id = Math.random()
-    todos.value = [{ text: newTodo.value, id }, ...todos.value]
+  if(newTodo.value.trim()) {
+    todos.value = [{ text: newTodo.value, id: newId.value }, ...todos.value]
+    console.log("Tarea agregada: ", todos.value)
     newTodo.value = ''
+    newId.value++
   } else {
     emit('badValue')
   }
@@ -46,6 +56,7 @@ const addTodo = () => {
 
 const deleteTodo = (id: number) => {
   todos.value = todos.value.filter(todo => todo.id != id)
+  console.log("Tarea eliminada: ", todos.value)
 }
 </script>
   

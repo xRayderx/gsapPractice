@@ -19,7 +19,6 @@ import Toast from '../components/ToastComponent.vue'
 import Todos from '../components/TodoComponent.vue'
 
 const showToast = ref(false)
-const showP = ref(false)
 
 const triggerToast = () => {
   showToast.value = true;
